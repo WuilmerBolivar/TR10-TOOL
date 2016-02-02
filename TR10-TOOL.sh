@@ -18,19 +18,16 @@
 #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 #= = = = = = = = = = Variables Globales TR10-TOOL = = = = = = = = = =
-. Config.sh
-#= = = = = = = = = = Variables Globales ADB = = = = = = = = = =
-adb_globals
+. FUNCTIONS/timing.sh
+. FUNCTIONS/zenity.sh
+. FUNCTIONS/conections.sh
+. FUNCTIONS/adb_globals.sh
 
-#= = = = = = = = = = Función de la barra de progreso = = = = = = = = = =
-function timing {
-	for i in `seq 1 100`
- do
-    echo "$i"
-    sleep 0.10
-done
-}
-timing | zenity --title=".: TR10-TOOL :."  \
+#= = = = = = = = = = Variables Globales ADB = = = = = = = = = =
+fadb_globals
+
+#= = = = = = = = = = Barra de progreso = = = = = = = = = =
+ftiming | zenity --title=".: TR10-TOOL :."  \
 --no-cancel --progress --percentage=0 --auto-close \
 --text="Herramienta desarrollada por TSU Erick Carvajal con fines educativos. 
 \n Cada persona es responsable de su uso." 
@@ -47,11 +44,11 @@ $ADB start-server & zenity --info --title="Notificación importante!" \
  --text="Reiniciando Servidor ADB..." 
 
 #= = = = = = = = = = Función para conectarse a la tablet = = = = = = = = = =
-conections_tr10_tool
+fconections_tr10_tool
 
 #= = = = = = = = = = Verifica el estado de conexión = = = = = = = = = =
 #= = = = = = = = = = Si se conecta se conecta al menú = = = = = = = = = =
-if [ $ESTADO == $CONECTADO ]; then
+if [ $ESTADO != 'devices' ]; then
 	bash MenuPrincipal.sh
 else
 	zenity --error --title="Notificación importante!" \
