@@ -1,7 +1,6 @@
 #!/bin/bash
 #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# Este script te ayudará en el proceso de rooteo de la Tablet TR10CS1 y TR10RS1
-# Activar la depuración USB en tu dispositivo para que funcione sin problemas.
+# Script que permite mostrar el menú y operar de acuerdo a lo selecionado.
 #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # A TINY TR10 CLI TOOL FOR GNU/LINUX BASH VERSION 1.0.0
 #
@@ -18,19 +17,21 @@
 #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 #= = = = = = = = = = Variables Globales TR10-TOOL = = = = = = = = = =
-. Config.sh
-. FUNCTIONS/senity.sh
+. FUNCTIONS/adb_globals.sh
+. FUNCTIONS/timing.sh
+. FUNCTIONS/zenity.sh
+. FUNCTIONS/conections.sh
 
 #= = = = = = = = = = Variables Globales ADB = = = = = = = = = =
-adb_globals
+fadb_globals
 
 #= = = = = = = = = = Función para conectarse a la tablet = = = = = = = = = =
-conections_tr10_tool
+fconections_tr10_tool
 
 #= = = = = = = = = = Función del Menú Principal = = = = = = = = = =
-function MenuPrincipal() {
+MenuPrincipal() {
  if [ $SERIAL == 'unknown' ]; then
-	OPCION=$(senity)
+	OPCION=$(fzenity)
  else
 	OPCION=$(zenity --list --hide-header --ok-label="Seleccionar" \
 	--height=340 --width=300 --title ".: PRINCIPAL :." --hide-column 1 \
@@ -46,7 +47,7 @@ function MenuPrincipal() {
 		"8" "Ayuda")
  fi
 #= = = = = = = = = = Función Opciones de la herramienta = = = = = = = = = =
-function Opciones() {
+Opciones() {
 case $OPCION in
 1)
 	OPCION1=$(zenity --hide-header --ok-label="Seleccionar" \
